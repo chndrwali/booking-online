@@ -90,14 +90,14 @@ export const AuthForm = ({ variant }: AuthFormProps) => {
           email: loginValues.email,
           password: loginValues.password,
           rememberMe: loginValues.remember ?? true,
-          callbackURL: "/admin",
+          callbackURL: "/onboarding",
         },
         {
           onRequest: () => setLoading(true),
           onSuccess: () => {
             setLoading(false);
             appToast.success("Successfully logged in!");
-            router.push("/admin");
+            router.push("/onboarding");
           },
           onError: (ctx) => {
             setLoading(false);
