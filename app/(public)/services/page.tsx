@@ -5,6 +5,10 @@ import { Clock, Calendar, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/utils";
+import {
+  GsapPageTransition,
+  GsapReveal,
+} from "@/components/custom/gsap-animator";
 
 export const metadata = {
   title: "Layanan",
@@ -36,7 +40,7 @@ async function ServiceList() {
         <Link key={service.id} href={`/services/${service.id}`}>
           <Card className="group overflow-hidden border-border/50 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 hover:border-primary/30 cursor-pointer h-full bg-background/50 backdrop-blur-sm">
             {service.image ? (
-              <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-violet-500/10 to-indigo-500/10 relative">
+              <div className="aspect-video w-full overflow-hidden bg-linear-to-br from-violet-500/10 to-indigo-500/10 relative">
                 <img
                   src={service.image}
                   alt={service.name}
@@ -45,7 +49,7 @@ async function ServiceList() {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
             ) : (
-              <div className="aspect-video w-full bg-gradient-to-br from-violet-500/5 to-indigo-500/5 flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-video w-full bg-linear-to-br from-violet-500/5 to-indigo-500/5 flex items-center justify-center relative overflow-hidden">
                 <Calendar className="h-12 w-12 text-violet-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:text-violet-500/50" />
               </div>
             )}
@@ -94,9 +98,12 @@ async function ServiceList() {
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen py-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <GsapPageTransition className="min-h-screen py-20">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <GsapReveal
+          direction="up"
+          className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+        >
           <Badge
             variant="outline"
             className="mb-4 text-violet-600 border-violet-200 bg-violet-50 dark:bg-violet-500/10 dark:border-violet-500/20 dark:text-violet-400"
@@ -110,39 +117,41 @@ export default function ServicesPage() {
             Temukan dan pesan layanan terbaik dari para profesional terpercaya
             kami. Jadwal pasti, tanpa drama.
           </p>
-        </div>
+        </GsapReveal>
 
-        <Suspense
-          fallback={
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card
-                  key={i}
-                  className="animate-pulse border-border/50 shadow-sm"
-                >
-                  <div className="aspect-video bg-muted/50" />
-                  <CardHeader className="space-y-2">
-                    <div className="h-5 w-2/3 rounded bg-muted/70" />
-                    <div className="h-4 w-1/3 rounded bg-muted/50" />
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="h-4 w-full rounded bg-muted/40" />
-                      <div className="h-4 w-4/5 rounded bg-muted/40" />
-                    </div>
-                    <div className="flex justify-between items-center pt-2">
-                      <div className="h-6 w-20 rounded-full bg-muted/50" />
-                      <div className="h-6 w-24 rounded bg-muted/60" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          }
-        >
-          <ServiceList />
-        </Suspense>
+        <GsapReveal direction="up" delay={0.2} className="relative">
+          <Suspense
+            fallback={
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <Card
+                    key={i}
+                    className="animate-pulse border-border/50 shadow-sm"
+                  >
+                    <div className="aspect-video bg-muted/50" />
+                    <CardHeader className="space-y-2">
+                      <div className="h-5 w-2/3 rounded bg-muted/70" />
+                      <div className="h-4 w-1/3 rounded bg-muted/50" />
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="h-4 w-full rounded bg-muted/40" />
+                        <div className="h-4 w-4/5 rounded bg-muted/40" />
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div className="h-6 w-20 rounded-full bg-muted/50" />
+                        <div className="h-6 w-24 rounded bg-muted/60" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            }
+          >
+            <ServiceList />
+          </Suspense>
+        </GsapReveal>
       </div>
-    </div>
+    </GsapPageTransition>
   );
 }

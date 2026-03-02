@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { Lock, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  GsapPageTransition,
+  GsapReveal,
+} from "@/components/custom/gsap-animator";
 
 export default function HomePage() {
   const steps = [
@@ -22,15 +26,18 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <GsapPageTransition className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-32 lg:pt-36 lg:pb-40 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <section className="relative overflow-hidden py-10 lg:py-20 ">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 bg-[url('/footer.svg')] opacity-5 dark:opacity-[0.02] mix-blend-overlay pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-        <div className="container mx-auto px-4 relative z-10">
+        <GsapReveal
+          className="container mx-auto px-4 relative z-10"
+          direction="up"
+        >
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/5 px-4 py-2 text-sm font-medium text-violet-600 dark:text-violet-400 backdrop-blur-md shadow-sm">
               <Lock className="h-4 w-4" />
@@ -81,12 +88,15 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
+        </GsapReveal>
       </section>
 
       {/* How it works Section */}
       <section className="py-24 bg-muted/30 border-y border-border/50 relative overflow-hidden">
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <GsapReveal
+          className="container mx-auto px-4 max-w-6xl relative z-10"
+          direction="up"
+        >
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
               Semudah 1-2-3
@@ -97,7 +107,11 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
+          <GsapReveal
+            stagger={0.2}
+            direction="up"
+            className="grid md:grid-cols-3 gap-8 relative"
+          >
             {/* Connecting line for desktop */}
             <div className="hidden md:block absolute top-[45px] left-[15%] right-[15%] h-[2px] bg-linear-to-r from-violet-500/10 via-indigo-500/20 to-violet-500/10" />
 
@@ -119,14 +133,17 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
+          </GsapReveal>
+        </GsapReveal>
       </section>
 
       {/* CTA Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-violet-600/5 dark:bg-violet-600/10" />
-        <div className="container mx-auto px-4 max-w-4xl relative z-10 text-center space-y-8">
+        <GsapReveal
+          className="container mx-auto px-4 max-w-4xl relative z-10 text-center space-y-8"
+          direction="up"
+        >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Siap untuk jadwal yang{" "}
             <span className="text-primary border-b-2 border-primary/30 pb-1">
@@ -147,8 +164,8 @@ export default function HomePage() {
               <Link href="/services">Mulai Booking Sekarang</Link>
             </Button>
           </div>
-        </div>
+        </GsapReveal>
       </section>
-    </div>
+    </GsapPageTransition>
   );
 }

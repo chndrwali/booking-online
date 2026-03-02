@@ -1,5 +1,9 @@
 import { ShieldCheck, Clock, Users, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  GsapPageTransition,
+  GsapReveal,
+} from "@/components/custom/gsap-animator";
 
 export const metadata = {
   title: "Tentang Kami",
@@ -35,10 +39,10 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen py-20">
+    <GsapPageTransition className="min-h-screen py-20">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Intro Section */}
-        <section className="text-center space-y-6 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <GsapReveal direction="up" className="text-center space-y-6 mb-24">
           <Badge
             variant="outline"
             className="mb-4 text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-400"
@@ -56,10 +60,13 @@ export default function AboutPage() {
             jasa digital dan konvensional, Jantra hadir untuk memberikan garansi
             kepastian bagi kedua belah pihak.
           </p>
-        </section>
+        </GsapReveal>
 
         {/* Mission Section */}
-        <section className="grid md:grid-cols-2 gap-12 items-center mb-24 animate-in fade-in duration-1000 delay-200">
+        <GsapReveal
+          direction="up"
+          className="grid md:grid-cols-2 gap-12 items-center mb-24"
+        >
           <div className="space-y-6">
             <h2 className="text-3xl font-bold">Misi Kami</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -94,10 +101,10 @@ export default function AboutPage() {
             <div className="absolute -top-6 -right-6 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl -z-10" />
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-violet-500/20 rounded-full blur-2xl -z-10" />
           </div>
-        </section>
+        </GsapReveal>
 
         {/* Values Section */}
-        <section className="space-y-12 animate-in fade-in duration-1000 delay-300">
+        <GsapReveal direction="up" className="space-y-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">Kenapa Memilih Jantra?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -106,7 +113,11 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <GsapReveal
+            stagger={0.2}
+            direction="up"
+            className="grid sm:grid-cols-2 gap-6"
+          >
             {features.map((feature, idx) => (
               <div
                 key={idx}
@@ -121,9 +132,9 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
-          </div>
-        </section>
+          </GsapReveal>
+        </GsapReveal>
       </div>
-    </div>
+    </GsapPageTransition>
   );
 }
