@@ -23,6 +23,7 @@ export const PasswordInput = ({
 }: PasswordInputProps) => {
   const [show, setShow] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const strength =
     showStrength && typeof value === "string"
@@ -41,8 +42,17 @@ export const PasswordInput = ({
           onChange={onChange}
           type={show ? "text" : "password"}
           className={cn(showToggle && "pr-10", className)}
+          onFocus={(e) => {
+            setIsFocused(true);
+            props.onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            setIsFocused(false);
+            props.onBlur?.(e);
+          }}
           onKeyUp={(e) => {
             setCapsLock(e.getModifierState("CapsLock"));
+            props.onKeyUp?.(e);
           }}
         />
 
@@ -69,8 +79,8 @@ export const PasswordInput = ({
         </div>
       )}
 
-      {rules && (
-        <ul className="space-y-1">
+      {rules && isFocused && (
+        <ul className="space-y-1 mt-2">
           <RuleItem valid={rules.minLength} text="Minimal 8 karakter" />
           <RuleItem
             valid={rules.uppercase}
