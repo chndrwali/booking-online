@@ -137,23 +137,31 @@ export const AuthForm = ({ variant }: AuthFormProps) => {
 
   return (
     <Card className="w-full max-w-lg border-none shadow-none bg-transparent">
-      <CardHeader className="items-center text-center">
-        <div className="flex flex-col items-center gap-2 mb-2">
+      <CardHeader>
+        <div className="flex flex-row items-center gap-3 mb-2">
           <Image
             src="/logo/logo.png"
             alt="Jantra Logo"
-            width={56}
-            height={56}
+            width={48}
+            height={48}
             className="object-contain"
             priority
           />
-          <h1 className="text-2xl font-bold tracking-tight">Jantra</h1>
-          <p className="text-sm text-muted-foreground italic">
-            dari janji menjadi kepastian
-          </p>
+          <div className="flex flex-col items-start justify-center">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground/90">
+              Jantra
+            </h1>
+            <p className="text-xs text-muted-foreground italic">
+              dari janji menjadi kepastian
+            </p>
+          </div>
         </div>
-        <CardTitle className="text-xl font-bold pt-4">{config.title}</CardTitle>
-        <CardDescription>{config.description}</CardDescription>
+        <CardTitle className="text-lg md:text-xl font-bold pt-4 text-center">
+          {config.title}
+        </CardTitle>
+        <CardDescription className="text-center">
+          {config.description}
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">

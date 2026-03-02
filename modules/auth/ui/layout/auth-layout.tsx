@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -124,6 +126,15 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
       ref={containerRef}
       className="relative min-h-screen w-full overflow-hidden bg-background flex items-center justify-center"
     >
+      {/* ── Back to Home Button ── */}
+      <Link
+        href="/"
+        className="absolute top-8 left-8 z-50 flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground md:top-8 md:left-8"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Kembali ke Beranda
+      </Link>
+
       {/* ── Animated gradient blobs ── */}
       <div ref={blobsRef} className="pointer-events-none absolute inset-0 z-0">
         <div
