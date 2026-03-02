@@ -25,6 +25,7 @@ model User {
   accounts    Account[]
   credentials Credential[]
   sessions    Session[]
+  services    Service[]
 
   role       String?
   banned     Boolean?  @default(false)
@@ -106,4 +107,55 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+// ─── LockSlot Models ───────────────────────────────────────
+
+model Service {
+  id          String   @id @default(cuid())
+  sellerId    String
+  name        String
+  description String?
+  duration    Int      // durasi dalam menit
+  price       Int      // harga dalam rupiah
+  image       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  seller   User      @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([sellerId])
+  @@map("service")
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  serviceId   String
+  buyerName   String
+  buyerEmail  String
+  buyerPhone  String
+  startTime   DateTime
+  endTime     DateTime
+  status      BookingStatus @default(PENDING)
+  paymentId   String?       // Mayar transaction ID
+  paymentLink String?       // Mayar payment URL
+  expiredAt   DateTime      // 15 menit setelah create
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, startTime])
+  @@index([serviceId, startTime])
+  @@index([status])
+  @@map("booking")
+}
+
+enum BookingStatus {
+  PENDING
+  PAID
+  CANCELLED
+  EXPIRED
 }

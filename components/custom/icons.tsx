@@ -42,6 +42,9 @@ import {
   Cpu,
   FolderGit2,
   Mail,
+  Calendar,
+  Store,
+  ClipboardList,
 } from "lucide-react";
 
 export type Icon = React.ComponentType<LucideProps>;
@@ -146,4 +149,7 @@ export const Icons = {
   workExp: BriefcaseBusiness,
   graduate: GraduationCap,
   mail: Mail,
+  calendar: Calendar,
+  store: Store,
+  clipboardList: ClipboardList,
 };

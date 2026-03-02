@@ -47,3 +47,12 @@ export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   }
   return next();
 });
+export const sellerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  if (ctx.auth.user?.role !== "seller") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Anda tidak memiliki akses seller",
+    });
+  }
+  return next();
+});

@@ -8,6 +8,8 @@ const config = {
     },
     resendApiKey: process.env.RESEND_API_KEY!,
     uploadthingToken: process.env.UPLOADTHING_TOKEN!,
+    mayarApiKey: process.env.MAYAR_API_KEY!,
+    mayarWebhookSecret: process.env.MAYAR_WEBHOOK!,
   },
 };
 
