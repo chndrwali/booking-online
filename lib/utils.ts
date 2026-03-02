@@ -50,18 +50,18 @@ export const getPasswordStrength = (password: string) => {
   ].filter(Boolean).length;
 
   let score = 1;
-  let label = "Weak";
+  let label = "Lemah";
   let color = "bg-red-500";
 
   if (rulesPassed >= 2) {
     score = 2;
-    label = "Fair";
+    label = "Cukup";
     color = "bg-yellow-500";
   }
 
   if (hasMinLength && hasUppercase && hasNumber && hasSpecialChar) {
     score = 4;
-    label = "Strong";
+    label = "Kuat";
     color = "bg-green-600";
   }
 

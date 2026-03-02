@@ -6,12 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-export const metadata = {
-  title: "LockSlot — Booking Online",
-  description:
-    "Sistem booking online dengan pembayaran DP. Jadwal terkunci setelah bayar.",
-};
-
 function formatRupiah(amount: number): string {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",

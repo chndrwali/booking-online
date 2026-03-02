@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
 import { updateUser } from "@/lib/auth-client";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import {
   MultiStepFormProvider,
   StepContent,
@@ -16,15 +16,9 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Lock,
-  Sparkles,
-  ShoppingBag,
-  Store,
-  User,
-  Phone,
-  ImageIcon,
-} from "lucide-react";
+import { User, ShoppingBag, Sparkles, Phone, Store } from "lucide-react";
+import { appToast } from "@/components/custom/app-toast";
+import { AvatarImageUpload } from "@/components/custom/avatar-image-upload";
 
 const steps: StepConfig[] = [
   { id: "welcome", title: "Kenalan" },
@@ -58,18 +52,18 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
           name: variables.name,
           image: variables.image || undefined,
         });
-        toast.success("Selamat datang di LockSlot! 🎉");
+        appToast.success("Selamat datang di LockSlot! 🎉");
         router.push("/onboarding/redirect");
       },
       onError: (error) => {
-        toast.error(error.message);
+        appToast.error(error.message);
       },
     }),
   );
 
   const handleComplete = () => {
     if (!formData.name || !formData.role) {
-      toast.error("Lengkapi semua data yang diperlukan");
+      appToast.error("Lengkapi semua data yang diperlukan");
       return;
     }
     completeMutation.mutate({
@@ -86,11 +80,18 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
         <CardHeader className="space-y-4 pb-2">
           {/* Logo */}
           <div className="flex items-center justify-center">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-violet-600 to-indigo-600 text-white">
-                <Lock className="h-5 w-5" />
-              </div>
-              <span className="text-xl font-bold">Jantra</span>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo/logo.png"
+                alt="Jantra Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+                priority
+              />
+              <span className="text-xl font-bold tracking-tight text-foreground/90">
+                Jantra
+              </span>
             </div>
           </div>
 
@@ -249,27 +250,21 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
                           </p>
                         </div>
 
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="image"
-                            className="flex items-center gap-2"
-                          >
-                            <ImageIcon className="h-4 w-4" />
-                            URL Foto Profil
+                        <div className="space-y-4">
+                          <Label className="flex items-center gap-2">
+                            Foto Profil
                           </Label>
-                          <Input
-                            id="image"
-                            placeholder="https://..."
+                          <AvatarImageUpload
                             value={formData.image}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                image: e.target.value,
-                              }))
+                            onChange={(url) =>
+                              setFormData((prev) => ({ ...prev, image: url }))
                             }
-                            className="h-12"
+                            onRemove={() =>
+                              setFormData((prev) => ({ ...prev, image: "" }))
+                            }
+                            name={formData.name}
                           />
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-center text-muted-foreground">
                             Opsional — bisa ditambahkan nanti
                           </p>
                         </div>

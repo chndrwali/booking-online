@@ -65,21 +65,21 @@ export const PasswordInput = ({
       {capsLock && (
         <div className="flex items-center gap-1 text-xs text-yellow-600">
           <AlertTriangle className="h-3 w-3" />
-          Caps Lock is on
+          Caps Lock aktif
         </div>
       )}
 
       {rules && (
         <ul className="space-y-1">
-          <RuleItem valid={rules.minLength} text="Minimum 8 characters" />
+          <RuleItem valid={rules.minLength} text="Minimal 8 karakter" />
           <RuleItem
             valid={rules.uppercase}
-            text="Contains uppercase letter (A–Z)"
+            text="Mengandung huruf besar (A–Z)"
           />
-          <RuleItem valid={rules.number} text="Contains number (0–9)" />
+          <RuleItem valid={rules.number} text="Mengandung angka (0–9)" />
           <RuleItem
             valid={rules.specialChar}
-            text="Contains special character (!@# etc)"
+            text="Mengandung karakter khusus (!@# dll)"
           />
         </ul>
       )}
@@ -93,7 +93,7 @@ export const PasswordInput = ({
             />
           </div>
           <p className="text-xs text-muted-foreground">
-            Password strength:{" "}
+            Kekuatan password:{" "}
             <span className="font-medium">{strength.label}</span>
           </p>
         </div>

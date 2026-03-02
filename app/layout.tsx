@@ -20,7 +20,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jantra — Dari janji menjadi kepastian",
+  title: {
+    default: "Jantra — Dari janji menjadi kepastian",
+    template: "%s | Jantra",
+  },
   description:
     "Sistem booking online dengan pembayaran DP. Jadwal terkunci setelah bayar.",
 };

@@ -156,12 +156,10 @@ export const AuthForm = ({ variant }: AuthFormProps) => {
             </p>
           </div>
         </div>
-        <CardTitle className="text-lg md:text-xl font-bold pt-4 text-center">
+        <CardTitle className="text-lg md:text-xl font-bold pt-4">
           {config.title}
         </CardTitle>
-        <CardDescription className="text-center">
-          {config.description}
-        </CardDescription>
+        <CardDescription>{config.description}</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
