@@ -1,22 +1,14 @@
 export const navPublics = [
   {
-    name: "About Me",
+    name: "Beranda",
     link: "/",
   },
   {
-    name: "Projects",
-    link: "/projects",
+    name: "Layanan",
+    link: "/services",
   },
   {
-    name: "Certificates",
-    link: "/certificates",
-  },
-  {
-    name: "Testimonials",
-    link: "/testimonials",
-  },
-  {
-    name: "Contact",
-    link: "/contact",
+    name: "Tentang",
+    link: "/about",
   },
 ];

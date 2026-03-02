@@ -6,6 +6,7 @@ import {
   MobileNavMenu,
   MobileNavToggle,
   Navbar,
+  NavbarButton,
   NavBody,
   NavItems,
 } from "@/components/custom/resizeable-navbar";
@@ -27,6 +28,9 @@ export const PublicNavbar = () => {
         <NavbarLogo />
         <NavItems items={navPublics} />
         <div className="flex items-center gap-4">
+          <NavbarButton variant="secondary" href="/login">
+            Masuk
+          </NavbarButton>
           <ThemeModeToggle variant="public" />
         </div>
       </NavBody>
