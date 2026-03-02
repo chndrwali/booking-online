@@ -135,8 +135,8 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
             className={cn(
               "relative px-4 py-2 transition-colors duration-200",
               isActive
-                ? "text-cyan-600 dark:text-cyan-400"
-                : "text-neutral-600 dark:text-neutral-300 hover:text-fuchsia-500 dark:hover:text-fuchsia-400",
+                ? "text-violet-600 dark:text-violet-400"
+                : "text-neutral-600 dark:text-neutral-300 hover:text-indigo-500 dark:hover:text-indigo-400",
             )}
             key={`link-${idx}`}
             href={item.link}
@@ -144,13 +144,13 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
             {isActive && (
               <motion.div
                 layoutId="active"
-                className="absolute inset-0 h-full w-full rounded-full bg-cyan-500/10 dark:bg-cyan-500/20"
+                className="absolute inset-0 h-full w-full rounded-full bg-violet-500/10 dark:bg-violet-500/20"
               />
             )}
             {hovered === idx && !isActive && (
               <motion.div
                 layoutId="hovered"
-                className="absolute inset-0 h-full w-full rounded-full bg-fuchsia-500/10 dark:bg-fuchsia-500/20"
+                className="absolute inset-0 h-full w-full rounded-full bg-indigo-500/10 dark:bg-indigo-500/20"
               />
             )}
             <span className="relative z-20">{item.name}</span>

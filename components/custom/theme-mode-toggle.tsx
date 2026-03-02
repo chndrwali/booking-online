@@ -28,7 +28,7 @@ export function ThemeModeToggle({ variant = "admin" }: ThemeModeToggleProps) {
             className={cn(
               "group/toggle relative inline-flex items-center justify-center overflow-hidden rounded-md px-4 py-2 text-sm font-bold transition-all duration-300",
               "bg-transparent text-foreground shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:-translate-y-0.5",
-              "border border-cyan-500/50 hover:border-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] backdrop-blur-md",
+              "border border-violet-500/50 hover:border-violet-400 hover:text-violet-500 dark:hover:text-violet-400 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] backdrop-blur-md",
             )}
           >
             <div className="relative size-4 mr-2">
@@ -53,15 +53,15 @@ export function ThemeModeToggle({ variant = "admin" }: ThemeModeToggleProps) {
         align="end"
         className={cn(
           variant === "public" &&
-            "border-cyan-500/20 bg-background/95 backdrop-blur-xl",
+            "border-violet-500/20 bg-background/95 backdrop-blur-xl",
         )}
       >
         <DropdownMenuItem
           onClick={() => setTheme("light")}
           className={cn(
-            "cursor-pointer focus:bg-fuchsia-500/10 focus:text-fuchsia-500 dark:focus:text-fuchsia-400",
+            "cursor-pointer focus:bg-indigo-500/10 focus:text-indigo-500 dark:focus:text-indigo-400",
             theme === "light" &&
-              "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-medium",
+              "bg-violet-500/10 text-violet-600 dark:text-violet-400 font-medium",
           )}
         >
           <Sun className="mr-2 size-4" />
@@ -70,9 +70,9 @@ export function ThemeModeToggle({ variant = "admin" }: ThemeModeToggleProps) {
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
           className={cn(
-            "cursor-pointer focus:bg-fuchsia-500/10 focus:text-fuchsia-500 dark:focus:text-fuchsia-400",
+            "cursor-pointer focus:bg-indigo-500/10 focus:text-indigo-500 dark:focus:text-indigo-400",
             theme === "dark" &&
-              "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-medium",
+              "bg-violet-500/10 text-violet-600 dark:text-violet-400 font-medium",
           )}
         >
           <Moon className="mr-2 size-4" />
@@ -81,9 +81,9 @@ export function ThemeModeToggle({ variant = "admin" }: ThemeModeToggleProps) {
         <DropdownMenuItem
           onClick={() => setTheme("system")}
           className={cn(
-            "cursor-pointer focus:bg-fuchsia-500/10 focus:text-fuchsia-500 dark:focus:text-fuchsia-400",
+            "cursor-pointer focus:bg-indigo-500/10 focus:text-indigo-500 dark:focus:text-indigo-400",
             theme === "system" &&
-              "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-medium",
+              "bg-violet-500/10 text-violet-600 dark:text-violet-400 font-medium",
           )}
         >
           <Monitor className="mr-2 size-4" />
