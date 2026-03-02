@@ -52,7 +52,9 @@ export const ResetPasswordForm = () => {
 
   const onSubmit = async (values: ResetPasswordFormValues) => {
     if (!token) {
-      setError("Token not found. Please request a new password reset link.");
+      setError(
+        "Token tidak ditemukan. Silakan minta tautan atur ulang kata sandi yang baru.",
+      );
       return;
     }
 
@@ -68,7 +70,7 @@ export const ResetPasswordForm = () => {
         onSuccess: () => {
           setLoading(false);
           setSuccess(true);
-          appToast.success("Password successfully changed!");
+          appToast.success("Kata sandi berhasil diubah!");
         },
         onError: (ctx) => {
           setLoading(false);
@@ -88,13 +90,15 @@ export const ResetPasswordForm = () => {
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100">
             <AlertTriangle className="h-8 w-8 text-yellow-600" />
           </div>
-          <CardTitle className="text-xl font-bold">Token Not Found</CardTitle>
+          <CardTitle className="text-xl font-bold">
+            Token Tidak Ditemukan
+          </CardTitle>
           <CardDescription className="text-base">
-            The reset password link is invalid or has expired. Please request a
-            new link.
+            Tautan atur ulang kata sandi tidak valid atau telah kedaluwarsa.
+            Silakan minta tautan baru.
           </CardDescription>
           <Button asChild className="mt-2">
-            <Link href="/forgot-password">Request New Link</Link>
+            <Link href="/forgot-password">Minta Tautan Baru</Link>
           </Button>
         </CardContent>
       </Card>
@@ -110,13 +114,14 @@ export const ResetPasswordForm = () => {
             <CheckCircle2 className="h-8 w-8 text-green-600" />
           </div>
           <CardTitle className="text-xl font-bold">
-            Password Changed Successfully!
+            Kata Sandi Berhasil Diubah!
           </CardTitle>
           <CardDescription className="text-base">
-            Your password has been reset. Please login with your new password.
+            Kata sandi Anda telah diatur ulang. Silakan masuk dengan kata sandi
+            baru Anda.
           </CardDescription>
           <Button className="mt-2" onClick={() => router.push("/login")}>
-            Sign In Now
+            Masuk Sekarang
           </Button>
         </CardContent>
       </Card>
@@ -126,8 +131,12 @@ export const ResetPasswordForm = () => {
   return (
     <Card className="w-full max-w-lg border-none shadow-none bg-transparent">
       <CardHeader>
-        <CardTitle className="text-xl font-bold">RESET PASSWORD</CardTitle>
-        <CardDescription>Enter a new password for your account</CardDescription>
+        <CardTitle className="text-xl font-bold">
+          ATUR ULANG KATA SANDI
+        </CardTitle>
+        <CardDescription>
+          Masukkan kata sandi baru untuk akun Anda
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -144,12 +153,12 @@ export const ResetPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel>Kata Sandi Baru</FormLabel>
                   <FormControl>
                     <PasswordInput
                       value={field.value}
                       onChange={field.onChange}
-                      placeholder="Enter new password"
+                      placeholder="Masukkan kata sandi baru"
                       required
                       showRules
                       showStrength
@@ -166,12 +175,12 @@ export const ResetPasswordForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel>Konfirmasi Kata Sandi</FormLabel>
                   <FormControl>
                     <PasswordInput
                       value={field.value}
                       onChange={field.onChange}
-                      placeholder="Re-enter new password"
+                      placeholder="Masukkan ulang kata sandi baru"
                       required
                       disabled={loading}
                     />
@@ -182,16 +191,16 @@ export const ResetPasswordForm = () => {
             />
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Spinner /> : "Change Password"}
+              {loading ? <Spinner /> : "Ubah Kata Sandi"}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">
-              Remember your password?{" "}
+              Ingat kata sandi Anda?{" "}
               <Link
                 href="/login"
                 className="text-primary cursor-pointer hover:underline"
               >
-                Back to login
+                Kembali untuk masuk
               </Link>
             </p>
           </form>

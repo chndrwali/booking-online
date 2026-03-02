@@ -1,28 +1,28 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.string().email("Alamat email tidak valid"),
+  password: z.string().min(8, "Kata sandi minimal 8 karakter"),
   remember: z.boolean().optional(),
 });
 
 export const registerSchema = loginSchema.extend({
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  name: z.string().min(2, "Nama minimal 2 karakter"),
 });
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Alamat email tidak valid"),
 });
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z.string().min(8, "Kata sandi minimal 8 karakter"),
     confirmPassword: z
       .string()
-      .min(8, "Confirm password must be at least 8 characters"),
+      .min(8, "Konfirmasi kata sandi minimal 8 karakter"),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "Kata sandi tidak cocok",
     path: ["confirmPassword"],
   });
 

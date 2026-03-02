@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LockSlot — Booking Online",
+  title: "Jantra — Dari janji menjadi kepastian",
   description:
     "Sistem booking online dengan pembayaran DP. Jadwal terkunci setelah bayar.",
 };
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

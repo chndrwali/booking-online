@@ -57,7 +57,7 @@ export const ForgotPasswordForm = () => {
         onSuccess: () => {
           setLoading(false);
           setSuccess(true);
-          appToast.success("Password reset link sent!");
+          appToast.success("Tautan atur ulang kata sandi terkirim!");
         },
         onError: (ctx) => {
           setLoading(false);
@@ -76,10 +76,10 @@ export const ForgotPasswordForm = () => {
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <CheckCircle2 className="h-8 w-8 text-green-600" />
           </div>
-          <CardTitle className="text-xl font-bold">Email Sent!</CardTitle>
+          <CardTitle className="text-xl font-bold">Email Terkirim!</CardTitle>
           <CardDescription className="text-base">
-            We have sent a link to reset your password to your email. Please
-            check your inbox or spam folder.
+            Kami telah mengirimkan tautan untuk mengatur ulang kata sandi ke
+            email Anda. Silakan periksa kotak masuk atau folder spam Anda.
           </CardDescription>
           <Button
             variant="outline"
@@ -89,10 +89,10 @@ export const ForgotPasswordForm = () => {
               form.reset();
             }}
           >
-            Resend
+            Kirim Ulang
           </Button>
           <Link href="/login" className="text-sm text-primary hover:underline">
-            Back to login page
+            Kembali ke halaman masuk
           </Link>
         </CardContent>
       </Card>
@@ -102,10 +102,10 @@ export const ForgotPasswordForm = () => {
   return (
     <Card className="w-full max-w-lg border-none shadow-none bg-transparent">
       <CardHeader>
-        <CardTitle className="text-xl font-bold">FORGOT PASSWORD</CardTitle>
+        <CardTitle className="text-xl font-bold">LUPA KATA SANDI</CardTitle>
         <CardDescription>
-          Enter your registered email address and we will send you a link to
-          reset your password
+          Masukkan alamat email Anda yang terdaftar dan kami akan mengirimkan
+          tautan untuk mengatur ulang kata sandi Anda.
         </CardDescription>
       </CardHeader>
 
@@ -123,10 +123,10 @@ export const ForgotPasswordForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>Alamat Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter your email address"
+                      placeholder="Masukkan alamat email anda"
                       {...field}
                       disabled={loading}
                     />
@@ -137,16 +137,16 @@ export const ForgotPasswordForm = () => {
             />
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Spinner /> : "Send Reset Link"}
+              {loading ? <Spinner /> : "Kirim Tautan Atur Ulang"}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">
-              Remember your password?{" "}
+              Ingat kata sandi Anda?{" "}
               <Link
                 href="/login"
                 className="text-primary cursor-pointer hover:underline"
               >
-                Back to login
+                Kembali untuk masuk
               </Link>
             </p>
           </form>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
+import { updateUser } from "@/lib/auth-client";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
@@ -51,7 +52,12 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
 
   const completeMutation = useMutation(
     trpc.onboarding.complete.mutationOptions({
-      onSuccess: () => {
+      onSuccess: async (_, variables) => {
+        // Force session cookie refresh by updating the user name via Better Auth
+        await updateUser({
+          name: variables.name,
+          image: variables.image || undefined,
+        });
         toast.success("Selamat datang di LockSlot! 🎉");
         router.push("/onboarding/redirect");
       },
@@ -84,7 +90,7 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-violet-600 to-indigo-600 text-white">
                 <Lock className="h-5 w-5" />
               </div>
-              <span className="text-xl font-bold">LockSlot</span>
+              <span className="text-xl font-bold">Jantra</span>
             </div>
           </div>
 
