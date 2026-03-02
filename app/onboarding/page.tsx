@@ -4,7 +4,7 @@ import { OnboardingForm } from "@/modules/auth/ui/form/onboarding-form";
 import { getOnboarding } from "@/hooks/get-onboarding";
 
 export const metadata = {
-  title: "Onboarding — LockSlot",
+  title: "Onboarding",
   description: "Lengkapi profil Anda untuk mulai menggunakan LockSlot",
   robots: { index: false, follow: false },
 };

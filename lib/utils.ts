@@ -78,3 +78,11 @@ export const getPasswordRules = (password: string) => ({
   number: /[0-9]/.test(password),
   specialChar: /[^A-Za-z0-9]/.test(password),
 });
+
+export function formatRupiah(amount: number): string {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(amount);
+}

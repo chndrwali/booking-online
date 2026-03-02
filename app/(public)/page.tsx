@@ -5,14 +5,7 @@ import { Lock, ArrowRight, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-function formatRupiah(amount: number): string {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(amount);
-}
+import { formatRupiah } from "@/lib/utils";
 
 async function ServiceList() {
   const services = await prisma.service.findMany({
@@ -72,7 +65,7 @@ async function ServiceList() {
                   <Clock className="h-3 w-3" />
                   {service.duration} menit
                 </Badge>
-                <span className="font-bold text-lg bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="font-bold text-lg bg-linear-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
                   {formatRupiah(service.price)}
                 </span>
               </div>
@@ -185,17 +178,6 @@ export default function HomePage() {
           <ServiceList />
         </Suspense>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Lock className="h-4 w-4" />
-            <span className="font-semibold">LockSlot</span>
-          </div>
-          <p>© 2026 LockSlot. Booking jasa hanya valid setelah bayar DP.</p>
-        </div>
-      </footer>
     </div>
   );
 }
