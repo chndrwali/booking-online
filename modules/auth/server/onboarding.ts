@@ -33,6 +33,7 @@ export const onboardingRouter = createTRPCRouter({
         });
       }
 
+      // Update user in database
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: {
