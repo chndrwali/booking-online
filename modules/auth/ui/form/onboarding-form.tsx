@@ -52,7 +52,7 @@ export function OnboardingForm({ initialName }: { initialName?: string }) {
           name: variables.name,
           image: variables.image || undefined,
         });
-        appToast.success("Selamat datang di LockSlot! 🎉");
+        appToast.success("Selamat datang di Jantra! 🎉");
         router.push("/onboarding/redirect");
       },
       onError: (error) => {

@@ -68,6 +68,9 @@ export const PublicNavbar = () => {
           })}
           <div className="flex w-full flex-col gap-4">
             <div className="w-full flex justify-center">
+              <NavbarButton variant="secondary" href="/login">
+                Masuk
+              </NavbarButton>
               <ThemeModeToggle variant="public" />
             </div>
           </div>
