@@ -16,7 +16,7 @@ import { ThemeModeToggle } from "@/components/custom/theme-mode-toggle";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { NavbarLogo } from "@/components/custom/resizeable-navbar";
-import { useSession } from "@/lib/auth-client";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 function getDashboardHref(role?: string | null): string {
   switch (role) {
@@ -34,10 +34,10 @@ function getDashboardHref(role?: string | null): string {
 export const PublicNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { user } = useCurrentUser();
 
-  const isLoggedIn = !!session?.user;
-  const dashboardHref = getDashboardHref(session?.user?.role);
+  const isLoggedIn = !!user;
+  const dashboardHref = getDashboardHref(user?.role);
   const buttonLabel = isLoggedIn ? "Dashboard" : "Masuk";
   const buttonHref = isLoggedIn ? dashboardHref : "/login";
 
