@@ -18,7 +18,7 @@ import { Loader2, Save } from "lucide-react";
 import { appToast } from "@/components/custom/app-toast";
 import { SingleImageUpload } from "@/components/custom/image-upload";
 
-export default function BuyerProfilePage() {
+export default function ProfilePage() {
   const trpc = useTRPC();
 
   const { data: profile, isLoading } = useQuery(

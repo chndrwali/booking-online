@@ -24,7 +24,7 @@ export const SignoutButton = () => {
       await signOut({
         fetchOptions: {
           onSuccess: () => {
-            appToast.success("Logout successfully");
+            appToast.success("Logout berhasil");
             router.push("/login");
           },
           onError: (ctx) => {

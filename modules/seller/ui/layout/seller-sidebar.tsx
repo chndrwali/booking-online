@@ -40,13 +40,13 @@ const SidebarLogo = () => {
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" asChild>
           <Link href="/seller">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-white">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-linear-to-br from-violet-600 to-indigo-600 text-white">
               <Lock className="size-4" />
             </div>
             {state === "expanded" && (
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-bold uppercase tracking-wider">
-                  LockSlot
+                  Jantra
                 </span>
                 <span className="truncate text-xs text-muted-foreground">
                   Seller Panel

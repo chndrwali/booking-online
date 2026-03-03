@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { SingleImageUpload } from "@/components/custom/image-upload";
 
 export default function CreateServicePage() {
   const trpc = useTRPC();
@@ -177,7 +178,11 @@ export default function CreateServicePage() {
                   <FormItem>
                     <FormLabel>URL Gambar</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://..." {...field} />
+                      <SingleImageUpload
+                        value={field.value}
+                        onChange={(url) => field.onChange(url)}
+                        onRemove={() => field.onChange("")}
+                      />
                     </FormControl>
                     <FormDescription>
                       Opsional — URL gambar layanan
