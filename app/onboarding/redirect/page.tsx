@@ -14,6 +14,7 @@ export default async function OnboardingRedirectPage() {
   if (user?.onboarded) {
     if (user.role === "seller") redirect("/seller");
     else if (user.role === "admin") redirect("/admin");
+    else if (user.role === "buyer") redirect("/buyer");
     else redirect("/");
   } else {
     redirect("/onboarding");
