@@ -56,3 +56,12 @@ export const sellerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   }
   return next();
 });
+export const buyerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  if (ctx.auth.user?.role !== "buyer") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Anda tidak memiliki akses buyer",
+    });
+  }
+  return next();
+});
