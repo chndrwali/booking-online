@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserAvatarProfile } from "@/components/custom/user-avatar-profile";
 import { sellerNavItems } from "@/modules/seller/ui/config/nav-config";
-import { ChevronsDown, Lock, UserCircle } from "lucide-react";
+import { ChevronsDown, Home, Lock, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
@@ -93,6 +93,19 @@ export default function SellerSidebar() {
             })}
           </SidebarMenu>
         </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Lainnya</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Kembali ke Beranda">
+                <Link href="/">
+                  <Home />
+                  <span>Beranda</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
@@ -136,9 +149,11 @@ export default function SellerSidebar() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => router.push("/seller")}>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/seller/profile")}
+                  >
                     <UserCircle className="mr-2 h-4 w-4" />
-                    Dashboard
+                    Profile
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
