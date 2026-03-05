@@ -1,0 +1,227 @@
+/* ─── Tiptap Editor Container ────────────────────────────── */
+.tiptap-editor {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
+}
+
+.tiptap-editor:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+}
+
+.tiptap-editor.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Toolbar ────────────────────────────────────────────── */
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--muted);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.tiptap-toolbar-group {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.tiptap-toolbar-group + .tiptap-toolbar-group::before {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: var(--border);
+}
+
+.tiptap-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.tiptap-toolbar-btn:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.tiptap-toolbar-btn.is-active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.tiptap-toolbar-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── Editor Content ─────────────────────────────────────── */
+.tiptap-content {
+  padding: 10px 12px;
+  min-height: 120px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.tiptap-content .tiptap {
+  outline: none;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: var(--foreground);
+}
+
+.tiptap-content .tiptap > * + * {
+  margin-top: 0.5em;
+}
+
+/* Placeholder */
+.tiptap-content .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Headings */
+.tiptap-content .tiptap h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tiptap-content .tiptap h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.tiptap-content .tiptap h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Lists */
+.tiptap-content .tiptap ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+
+.tiptap-content .tiptap ol {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+.tiptap-content .tiptap li {
+  margin-top: 0.25em;
+}
+
+.tiptap-content .tiptap li p {
+  margin: 0;
+}
+
+/* Blockquote */
+.tiptap-content .tiptap blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1em;
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+/* Code */
+.tiptap-content .tiptap code {
+  background: var(--muted);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85em;
+}
+
+.tiptap-content .tiptap pre {
+  background: var(--muted);
+  padding: 12px 16px;
+  border-radius: calc(var(--radius) - 2px);
+  overflow-x: auto;
+}
+
+.tiptap-content .tiptap pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.85em;
+}
+
+/* Horizontal Rule */
+.tiptap-content .tiptap hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1em 0;
+}
+
+/* Strong & Emphasis */
+.tiptap-content .tiptap strong {
+  font-weight: 700;
+}
+
+.tiptap-content .tiptap em {
+  font-style: italic;
+}
+
+.tiptap-content .tiptap s {
+  text-decoration: line-through;
+}
+
+.tiptap-content .tiptap u {
+  text-decoration: underline;
+}
+
+/* Dark mode from shadcn */
+.dark .tiptap-editor {
+  background: transparent;
+}
+
+.dark .tiptap-toolbar {
+  background: color-mix(in oklch, var(--muted) 80%, transparent);
+}
+
+/* Scrollbar styling */
+.tiptap-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tiptap-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tiptap-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.tiptap-content::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}

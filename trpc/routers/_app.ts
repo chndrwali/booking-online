@@ -1,6 +1,6 @@
 import { createTRPCRouter } from "@/trpc/init";
-import { serviceRouter } from "@/trpc/routers/service";
-import { bookingRouter } from "@/trpc/routers/booking";
+import { serviceRouter } from "@/modules/seller/server/service";
+import { bookingRouter } from "@/modules/seller/server/booking";
 import { onboardingRouter } from "@/modules/auth/server/onboarding";
 import { buyerRouter } from "@/trpc/routers/buyer";
 
