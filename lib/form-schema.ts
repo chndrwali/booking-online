@@ -36,15 +36,16 @@ export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 export const serviceSchema = z.object({
   name: z.string().min(2, "Nama layanan minimal 2 karakter"),
+  shortDescription: z.string().optional(),
   description: z.string().optional(),
   duration: z.number().int().min(15, "Durasi minimal 15 menit"),
   price: z.number().int().min(1000, "Harga minimal Rp 1.000"),
   image: z.string().url().optional().or(z.literal("")),
+  isActive: z.boolean().default(true),
 });
 
 export const serviceUpdateSchema = serviceSchema.partial().extend({
   id: z.string(),
-  isActive: z.boolean().optional(),
 });
 
 export const bookingSchema = z.object({

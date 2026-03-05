@@ -117,8 +117,9 @@ model Verification {
 model Service {
   id          String   @id @default(cuid())
   sellerId    String
-  name        String
-  description String?
+  name             String
+  shortDescription String?
+  description      String?
   duration    Int      // durasi dalam menit
   price       Int      // harga dalam rupiah
   image       String?

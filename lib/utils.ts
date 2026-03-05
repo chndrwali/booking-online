@@ -5,6 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const LIMIT_CARD = 9;
+
 export const getInitials = (name: string): string =>
   name
     .split(" ")

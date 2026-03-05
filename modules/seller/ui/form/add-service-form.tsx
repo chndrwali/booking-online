@@ -13,10 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { TiptapEditor } from "@/components/custom/tiptap-editor";
+import { Switch } from "@/components/ui/switch";
 import { SingleImageUpload } from "@/components/custom/image-upload";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
 
@@ -30,10 +31,12 @@ const getDefaultValues = (
   overrides?: Partial<ServiceFormValues>,
 ): ServiceFormValues => ({
   name: overrides?.name || "",
+  shortDescription: overrides?.shortDescription || "",
   description: overrides?.description || "",
   duration: overrides?.duration || 60,
   price: overrides?.price || 50000,
   image: overrides?.image || "",
+  isActive: overrides?.isActive ?? true,
 });
 
 export const AddServiceForm = ({
@@ -68,6 +71,28 @@ export const AddServiceForm = ({
                   disabled={isLoading}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="shortDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Deskripsi Singkat</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Ringkasan singkat layanan Anda..."
+                  className="min-h-[80px]"
+                  {...field}
+                  disabled={isLoading}
+                />
+              </FormControl>
+              <FormDescription>
+                Opsional — tampil di kartu layanan
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -157,13 +182,32 @@ export const AddServiceForm = ({
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="isActive"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Status Layanan</FormLabel>
+                <FormDescription>
+                  Aktifkan jika layanan ini tersedia untuk dipesan.
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isLoading}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         <div className="flex gap-3">
           <Button type="submit" disabled={isLoading} className="min-w-[120px]">
             {isLoading && <Spinner />}
             Simpan
-          </Button>
-          <Button type="button" variant="outline" asChild disabled={isLoading}>
-            <Link href="/seller/services">Batal</Link>
           </Button>
         </div>
       </form>

@@ -4,6 +4,17 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
+const listInputSchema = z.object({
+  page: z.number().int().min(1).default(1),
+  limit: z.number().int().min(1).max(50).default(10),
+  search: z.string().optional(),
+  isActive: z.boolean().optional(),
+  sortBy: z
+    .enum(["createdAt", "name", "price", "isActive"])
+    .default("createdAt"),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+});
+
 export const serviceRouter = createTRPCRouter({
   /** Seller: Buat layanan baru */
   create: sellerProcedure
@@ -19,16 +30,44 @@ export const serviceRouter = createTRPCRouter({
       return service;
     }),
 
-  /** Seller: List semua layanan milik seller */
-  list: sellerProcedure.query(async ({ ctx }) => {
-    const services = await prisma.service.findMany({
-      where: { sellerId: ctx.auth.user.id },
-      orderBy: { createdAt: "desc" },
-      include: {
-        _count: { select: { bookings: { where: { status: "PAID" } } } },
-      },
-    });
-    return services;
+  /** Seller: List layanan milik seller dengan pagination, search, sort */
+  list: sellerProcedure.input(listInputSchema).query(async ({ ctx, input }) => {
+    const { page, limit, search, isActive, sortBy, sortOrder } = input;
+    const skip = (page - 1) * limit;
+
+    const where = {
+      sellerId: ctx.auth.user.id,
+      ...(isActive !== undefined && { isActive }),
+      ...(search && {
+        OR: [
+          { name: { contains: search, mode: "insensitive" as const } },
+          {
+            shortDescription: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          },
+        ],
+      }),
+    };
+
+    const [services, total] = await Promise.all([
+      prisma.service.findMany({
+        where,
+        orderBy: { [sortBy]: sortOrder },
+        skip,
+        take: limit,
+      }),
+      prisma.service.count({ where }),
+    ]);
+
+    return {
+      items: services,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }),
 
   /** Seller: Update layanan */
@@ -57,7 +96,7 @@ export const serviceRouter = createTRPCRouter({
       });
     }),
 
-  /** Seller: Soft delete layanan (isActive = false) */
+  /** Seller: Delete layanan */
   delete: sellerProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -71,10 +110,22 @@ export const serviceRouter = createTRPCRouter({
         });
       }
 
-      return prisma.service.update({
+      return prisma.service.delete({
         where: { id: input.id },
-        data: { isActive: false },
       });
+    }),
+
+  /** Seller: Bulk delete layanan */
+  bulkDelete: sellerProcedure
+    .input(z.object({ ids: z.array(z.string()).min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const result = await prisma.service.deleteMany({
+        where: {
+          id: { in: input.ids },
+          sellerId: ctx.auth.user.id,
+        },
+      });
+      return { deletedCount: result.count };
     }),
 
   /** Public: Detail layanan */
