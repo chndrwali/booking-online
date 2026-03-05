@@ -4,6 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { ThemeModeToggle } from "@/components/custom/theme-mode-toggle";
 import { Breadcrumbs } from "@/modules/admin/ui/components/breadcrumbs";
+import { SearchInput } from "../components/search-input";
 
 export default function SellerHeader() {
   return (
@@ -15,6 +16,7 @@ export default function SellerHeader() {
       </div>
 
       <div className="flex items-center gap-2">
+        <SearchInput />
         <ThemeModeToggle />
       </div>
     </header>
