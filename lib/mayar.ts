@@ -20,7 +20,7 @@ interface MayarPaymentResponse {
   };
 }
 
-const MAYAR_BASE_URL = "https://api.mayar.id/hl/v1";
+const MAYAR_BASE_URL = "https://api.mayar.club/hl/v1";
 
 export async function createMayarPayment(
   params: CreatePaymentParams,

@@ -3,6 +3,7 @@ import { serviceSchema, serviceUpdateSchema } from "@/lib/form-schema";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { deleteUploadthingFiles } from "@/lib/uploadthing-server";
 
 const listInputSchema = z.object({
   page: z.number().int().min(1).default(1),
@@ -110,6 +111,11 @@ export const serviceRouter = createTRPCRouter({
         });
       }
 
+      // Delete image from UploadThing if exists
+      if (existing.image) {
+        await deleteUploadthingFiles([existing.image]);
+      }
+
       return prisma.service.delete({
         where: { id: input.id },
       });
@@ -119,6 +125,23 @@ export const serviceRouter = createTRPCRouter({
   bulkDelete: sellerProcedure
     .input(z.object({ ids: z.array(z.string()).min(1) }))
     .mutation(async ({ ctx, input }) => {
+      // Fetch services to get image URLs before deleting
+      const services = await prisma.service.findMany({
+        where: {
+          id: { in: input.ids },
+          sellerId: ctx.auth.user.id,
+        },
+        select: { image: true },
+      });
+
+      // Delete images from UploadThing
+      const imageUrls = services
+        .map((s) => s.image)
+        .filter(Boolean) as string[];
+      if (imageUrls.length > 0) {
+        await deleteUploadthingFiles(imageUrls);
+      }
+
       const result = await prisma.service.deleteMany({
         where: {
           id: { in: input.ids },

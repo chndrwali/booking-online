@@ -45,6 +45,7 @@ import {
 import { LIMIT_CARD } from "@/lib/utils";
 import { ResponsiveModal } from "@/components/custom/responsive-modal";
 import { AddServiceForm } from "../form/add-service-form";
+import { DeleteConfirmationDialog } from "@/components/custom/alert-dialog-custom";
 import type { Service } from "@/app/generated/prisma/client";
 import type { ServiceFormValues } from "@/lib/form-schema";
 
@@ -97,6 +98,8 @@ const ServiceGridContent = ({ search }: { search: string }) => {
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [deletingService, setDeletingService] = useState<Service | null>(null);
+  const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState(false);
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -124,6 +127,7 @@ const ServiceGridContent = ({ search }: { search: string }) => {
         queryClient.invalidateQueries({
           queryKey: trpc.service.list.queryKey(),
         });
+        setDeletingService(null);
         appToast.success("Layanan berhasil dihapus");
       },
       onError: (err) => {
@@ -140,6 +144,7 @@ const ServiceGridContent = ({ search }: { search: string }) => {
         });
         setSelectedIds(new Set());
         setSelectionMode(false);
+        setShowBulkDeleteDialog(false);
         appToast.success(`${result.deletedCount} layanan berhasil dihapus`);
       },
       onError: (err) => {
@@ -190,6 +195,10 @@ const ServiceGridContent = ({ search }: { search: string }) => {
   const handleBulkDelete = () => {
     if (selectedIds.size === 0) return;
     bulkDelete({ ids: Array.from(selectedIds) });
+  };
+
+  const handleSingleDelete = () => {
+    if (deletingService) deleteService({ id: deletingService.id });
   };
 
   const handleFilterChange = (value: string) => {
@@ -252,8 +261,8 @@ const ServiceGridContent = ({ search }: { search: string }) => {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={handleBulkDelete}
-                disabled={selectedIds.size === 0 || isBulkDeleting}
+                onClick={() => setShowBulkDeleteDialog(true)}
+                disabled={selectedIds.size === 0}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Hapus ({selectedIds.size})
@@ -271,7 +280,7 @@ const ServiceGridContent = ({ search }: { search: string }) => {
               <ServiceCard
                 key={service.id}
                 service={service}
-                onDelete={() => deleteService({ id: service.id })}
+                onDelete={() => setDeletingService(service)}
                 isDeleting={isDeleting}
                 selectionMode={selectionMode}
                 isSelected={selectedIds.has(service.id)}
@@ -304,6 +313,31 @@ const ServiceGridContent = ({ search }: { search: string }) => {
               />
             )}
           </ResponsiveModal>
+
+          {/* Single Delete Dialog */}
+          <DeleteConfirmationDialog
+            open={!!deletingService}
+            onOpenChange={(open) => !open && setDeletingService(null)}
+            title={`Hapus "${deletingService?.name}"?`}
+            description="Tindakan ini tidak dapat dibatalkan. Layanan ini akan dihapus secara permanen beserta semua data terkait."
+            onConfirm={handleSingleDelete}
+            isDeleting={isDeleting}
+            confirmationKeyword="DELETE"
+            confirmationText="Ya, Hapus"
+          />
+
+          {/* Bulk Delete Dialog */}
+          <DeleteConfirmationDialog
+            open={showBulkDeleteDialog}
+            onOpenChange={setShowBulkDeleteDialog}
+            title={`Hapus ${selectedIds.size} layanan?`}
+            description="Tindakan ini tidak dapat dibatalkan. Semua layanan yang dipilih akan dihapus secara permanen."
+            onConfirm={handleBulkDelete}
+            isDeleting={isBulkDeleting}
+            confirmationKeyword="DELETE"
+            confirmationText="Ya, Hapus Semua"
+          />
+
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-between">
