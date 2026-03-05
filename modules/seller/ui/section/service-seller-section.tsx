@@ -19,6 +19,7 @@ export const ServiceSellerSection = () => {
           </Link>
         </Button>
       }
+      scrollable={false}
     >
       <ServiceGrid />
     </PageContainer>

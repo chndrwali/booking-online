@@ -9,7 +9,6 @@ import { formatRupiah } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 interface ServiceCardProps {
   service: Service;
@@ -18,6 +17,7 @@ interface ServiceCardProps {
   selectionMode: boolean;
   isSelected: boolean;
   onToggleSelect: (id: string) => void;
+  onUpdate?: () => void;
 }
 
 export const ServiceCard = ({
@@ -27,6 +27,7 @@ export const ServiceCard = ({
   selectionMode,
   isSelected,
   onToggleSelect,
+  onUpdate,
 }: ServiceCardProps) => {
   return (
     <Card
@@ -80,11 +81,14 @@ export const ServiceCard = ({
         </div>
         {!selectionMode && (
           <div className="flex items-center gap-2 pt-2">
-            <Button variant="outline" size="sm" className="flex-1" asChild>
-              <Link href={`/seller/services/${service.id}/edit`}>
-                <Pencil className="mr-1 h-3 w-3" />
-                Edit
-              </Link>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={onUpdate}
+            >
+              <Pencil className="mr-1 h-3 w-3" />
+              Edit
             </Button>
             <Button
               variant="destructive"

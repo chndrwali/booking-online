@@ -43,6 +43,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LIMIT_CARD } from "@/lib/utils";
+import { ResponsiveModal } from "@/components/custom/responsive-modal";
+import { AddServiceForm } from "../form/add-service-form";
+import type { Service } from "@/app/generated/prisma/client";
+import type { ServiceFormValues } from "@/lib/form-schema";
 
 // ============================================
 // Main Export Component
@@ -92,6 +96,7 @@ const ServiceGridContent = ({ search }: { search: string }) => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [editingService, setEditingService] = useState<Service | null>(null);
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -142,6 +147,26 @@ const ServiceGridContent = ({ search }: { search: string }) => {
       },
     }),
   );
+
+  const { mutate: updateService, isPending: isUpdating } = useMutation(
+    trpc.service.update.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.service.list.queryKey(),
+        });
+        setEditingService(null);
+        appToast.success("Layanan berhasil diperbarui");
+      },
+      onError: (err) => {
+        appToast.error(err.message);
+      },
+    }),
+  );
+
+  const handleUpdateSubmit = (values: ServiceFormValues) => {
+    if (!editingService) return;
+    updateService({ id: editingService.id, ...values });
+  };
 
   // ─── Selection Handlers ────────────────────────────────
   const toggleSelect = useCallback((id: string) => {
@@ -251,10 +276,34 @@ const ServiceGridContent = ({ search }: { search: string }) => {
                 selectionMode={selectionMode}
                 isSelected={selectedIds.has(service.id)}
                 onToggleSelect={toggleSelect}
+                onUpdate={() => setEditingService(service)}
               />
             ))}
           </div>
 
+          {/* Edit Modal */}
+          <ResponsiveModal
+            title="Edit Layanan"
+            open={!!editingService}
+            onOpenChange={(open) => !open && setEditingService(null)}
+            width="sm:max-w-[90%] lg:max-w-[70%]"
+          >
+            {editingService && (
+              <AddServiceForm
+                defaultValues={{
+                  name: editingService.name,
+                  shortDescription: editingService.shortDescription ?? "",
+                  description: editingService.description ?? "",
+                  duration: editingService.duration,
+                  price: editingService.price,
+                  image: editingService.image ?? "",
+                  isActive: editingService.isActive,
+                }}
+                onSubmit={handleUpdateSubmit}
+                isLoading={isUpdating}
+              />
+            )}
+          </ResponsiveModal>
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-between">
